@@ -1,0 +1,5 @@
+config BR2_PACKAGE_AESD_CHAR_DRIVER
+    tristate "aesd-char-driver"
+    depends on BR2_LINUX_KERNEL
+    help
+      Builds and installs the aesdchar kernel module.

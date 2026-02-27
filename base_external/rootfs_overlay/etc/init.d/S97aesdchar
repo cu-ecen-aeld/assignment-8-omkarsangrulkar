@@ -1,0 +1,35 @@
+#!/bin/sh
+DRIVER_NAME="aesdchar"
+DEVICE_NAME="aesdchar"
+MODE="664"
+
+case "$1" in
+    start)
+        echo "Loading aesdchar module"
+        modprobe ${DRIVER_NAME} || insmod /lib/modules/$(uname -r)/extra/${DRIVER_NAME}.ko
+        MAJOR=$(awk "\$2==\"${DRIVER_NAME}\" {print \$1}" /proc/devices)
+        if [ -z "${MAJOR}" ]; then
+            echo "Failed to find major number for ${DRIVER_NAME}"
+            exit 1
+        fi
+        if [ ! -e /dev/${DEVICE_NAME} ]; then
+            mknod /dev/${DEVICE_NAME} c ${MAJOR} 0
+            chmod ${MODE} /dev/${DEVICE_NAME}
+        fi
+        echo "aesdchar loaded, major=${MAJOR}"
+        ;;
+    stop)
+        echo "Unloading aesdchar module"
+        rm -f /dev/${DEVICE_NAME}
+        rmmod ${DRIVER_NAME} || true
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+exit 0
