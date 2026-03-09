@@ -1,4 +1,4 @@
-AESD_CHAR_DRIVER_VERSION = 93f4eb8
+AESD_CHAR_DRIVER_VERSION = a47fcfa
 AESD_CHAR_DRIVER_SITE = git@github.com:cu-ecen-aeld/assignments-3-and-later-omkarsangrulkar.git
 AESD_CHAR_DRIVER_SITE_METHOD = git
 AESD_CHAR_DRIVER_GIT_SUBMODULES = YES
